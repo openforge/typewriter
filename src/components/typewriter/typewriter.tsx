@@ -1,37 +1,43 @@
-import { Component, h, Element, Prop, Watch } from '@stencil/core';
+import { Component, h, Element, Prop, Watch } from "@stencil/core";
 
 @Component({
-  tag: 'of-typewriter',
-  styleUrl: 'typewriter.css'
+  tag: "of-typewriter",
+  styleUrl: "typewriter.css",
 })
 export class TypewriterComponent {
-
   @Element() element: HTMLElement;
   @Prop() message: string;
   @Prop() speed;
 
   componentDidLoad() {
-    this.writeMessage();    
+    this.writeMessage();
   }
 
-  @Watch('message')
+  @Watch("message")
   messageHandler() {
     this.writeMessage();
   }
 
   writeMessage() {
-    this.element.firstChild.textContent = null;
+    const divElement = this.element.children[0];
+    const slotElement = divElement.children[0];
+    slotElement.textContent = null;
+    console.dir(this.element);
     let i = 0;
     const intertval = setInterval(() => {
-        if (i >= this.message.length) {
-            clearInterval(intertval);
-        }
-        this.element.firstChild.textContent += this.message.charAt(i);
-        i++;
+      if (i >= this.message.length) {
+        clearInterval(intertval);
+      }
+      slotElement.textContent += this.message.charAt(i);
+      i++;
     }, this.speed);
   }
 
   render() {
-    return <h1 id="typing"></h1>;
+    return (
+      <div>
+        <slot />
+      </div>
+    );
   }
 }

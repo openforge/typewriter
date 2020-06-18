@@ -1,4 +1,4 @@
-import { r as registerInstance, h, g as getElement } from './index-35c357c7.js';
+import { r as registerInstance, h, g as getElement } from './index-0e71bd20.js';
 
 const typewriterCss = ":host{display:block}";
 
@@ -13,18 +13,21 @@ const TypewriterComponent = class {
         this.writeMessage();
     }
     writeMessage() {
-        this.element.firstChild.textContent = null;
+        const divElement = this.element.children[0];
+        const slotElement = divElement.children[0];
+        slotElement.textContent = null;
+        console.dir(this.element);
         let i = 0;
         const intertval = setInterval(() => {
             if (i >= this.message.length) {
                 clearInterval(intertval);
             }
-            this.element.firstChild.textContent += this.message.charAt(i);
+            slotElement.textContent += this.message.charAt(i);
             i++;
         }, this.speed);
     }
     render() {
-        return h("h1", { id: "typing" });
+        return (h("div", null, h("slot", null)));
     }
     get element() { return getElement(this); }
     static get watchers() { return {
