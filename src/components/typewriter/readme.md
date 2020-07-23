@@ -1,4 +1,4 @@
-# my-component
+# OF Typewriter
 
 
 
@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property | Attribute | Description     | Type     | Default     |
-| -------- | --------- | --------------- | -------- | ----------- |
-| `first`  | `first`   | The first name  | `string` | `undefined` |
-| `last`   | `last`    | The last name   | `string` | `undefined` |
-| `middle` | `middle`  | The middle name | `string` | `undefined` |
+| Property  | Attribute | Description | Type     | Default     |
+| --------- | --------- | ----------- | -------- | ----------- |
+| `message` | `message` |             | `string` | `undefined` |
+| `speed`   | `speed`   |             | `number` | `50`        |
+| `tag`     | `tag`     |             | `string` | `'p'`       |
 
 
 ----------------------------------------------

@@ -1,13 +1,16 @@
-import { Component, h, Element, Prop, Watch } from "@stencil/core";
+import { Component, Element, Prop, Watch } from "@stencil/core";
 
 @Component({
-  tag: "of-typewriter",
-  styleUrl: "typewriter.css",
+  tag: "of-typewriter"
 })
 export class TypewriterComponent {
   @Element() element: HTMLElement;
   @Prop() message: string;
-  @Prop() speed;
+  @Prop() speed: number = 50;
+  @Prop() tag: string = 'p';
+
+  private interval: number;
+  private internalElement: HTMLElement;
 
   componentDidLoad() {
     this.writeMessage();
@@ -19,25 +22,26 @@ export class TypewriterComponent {
   }
 
   writeMessage() {
-    const divElement = this.element.children[0];
-    const slotElement = divElement.children[0];
-    slotElement.textContent = null;
-    console.dir(this.element);
+    if (this.internalElement) {
+      document.getElementById('of-typewriter').remove();
+    }
+    this.internalElement = document.createElement(this.tag);
+    this.internalElement.setAttribute('id', 'of-typewriter');
+    this.internalElement.addEventListener('click', this.completeText.bind(this));
+    this.element.appendChild(this.internalElement);
+
     let i = 0;
-    const intertval = setInterval(() => {
+    this.interval = setInterval(() => {
       if (i >= this.message.length) {
-        clearInterval(intertval);
+        clearInterval(this.interval);
       }
-      slotElement.textContent += this.message.charAt(i);
+      this.internalElement.textContent += this.message.charAt(i);
       i++;
     }, this.speed);
   }
 
-  render() {
-    return (
-      <div>
-        <slot />
-      </div>
-    );
+  completeText() {
+    this.internalElement.textContent = this.message;
+    clearInterval(this.interval);
   }
 }
